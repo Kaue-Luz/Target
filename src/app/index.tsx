@@ -7,6 +7,10 @@ export default function Index() {
       <Text>Hello Expo Router</Text>
 
       <Button title="Go to Target" onPress={() => router.navigate("/target")} />
+      <Button
+        title="Transaction"
+        onPress={() => router.navigate("/transaction/13")}
+      />
     </View>
   );
 }
