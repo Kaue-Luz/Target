@@ -16,6 +16,9 @@
       "bundleIdentifier": "com.erikk.target",
       "icon": "./assets/icon.png"
     },
-    "plugins": ["expo-router"]
+    "plugins": [
+      "expo-router",
+      "expo-font"
+    ]
   }
 }
