@@ -1,12 +1,15 @@
-import { router } from "expo-router";
-import { Button, Text, View } from "react-native";
+
+import { View } from "react-native";
+
+import { PageHeader } from "@/components/PageHeader";
 
 export default function Target() {
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>Target</Text>
-
-      <Button title="Go back" onPress={() => router.back()} />
+    <View style={{ flex: 1, padding: 24 }}>
+      <PageHeader
+        title="Meta"
+        subtitle="Economize para alcançar sua meta financeira"
+      />
     </View>
   );
 }

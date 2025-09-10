@@ -6,7 +6,7 @@
     "version": "1.0.0",
     "android": {
       "package": "com.erikk.target",
-      "edgeToEdgeEnable": true,
+      "edgeToEdgeEnabled": true,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#3D44CD"
