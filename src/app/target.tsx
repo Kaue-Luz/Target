@@ -3,6 +3,7 @@ import { View } from "react-native";
 import { PageHeader } from "@/components/PageHeader";
 import { Input } from "@/components/Input";
 import { Button } from "@/components/Button";
+import { CurrencyInput } from "@/components/CurrencyInput";
 
 export default function Target() {
   return (
@@ -14,7 +15,13 @@ export default function Target() {
 
       <View style={{ marginTop: 32, gap: 34 }}>
         <Input label="Nome da meta" placeholder="Ex: Comprar um carro" />
-        <Button title="Salvar" />
+
+        <CurrencyInput
+          label="Valor alvo"
+          placeholder="Ex: R$ 1.000,00"
+          value={0}
+        />
+        <Button title="Salvar" isProcessing />
       </View>
     </View>
   );
