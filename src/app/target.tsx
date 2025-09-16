@@ -17,7 +17,7 @@ export default function Target() {
         <Input label="Nome da meta" placeholder="Ex: Comprar um carro" />
 
         <CurrencyInput
-          label="Valor alvo"
+          label="Valor alvo (R$)"
           placeholder="Ex: R$ 1.000,00"
           value={0}
         />
