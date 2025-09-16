@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
   },
   label: {
     fontFamily: fontFamily.medium,
-    color: colors.gray[500],
+    color: colors.gray[600],
     fontSize: 12,
   },
   input: {
