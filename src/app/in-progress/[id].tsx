@@ -1,19 +1,18 @@
-import { router, useLocalSearchParams } from "expo-router";
-import { View } from "react-native";
+import { useCallback, useState } from "react";
+import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
+import { Alert, View } from "react-native";
 
 import { PageHeader } from "@/components/PageHeader";
 import { Progress } from "@/components/Progress";
 import { List } from "@/components/List";
 import { Button } from "@/components/Button";
 import { Transaction, TransactionProps } from "@/components/Transaction";
+import { Loading } from "@/components/Loading";
 
 import { TransactionTypes } from "@/utils/TransactionTypes";
 
-const details = {
-  current: "R$ 50,00",
-  target: "R$ 100,00",
-  percentage: 50,
-};
+import { useTargetDatabase } from "@/database/useTargetDatabase";
+import { numberToCurrency } from "@/utils/numberToCurrency";
 
 const transactions: TransactionProps[] = [
   {
@@ -33,12 +32,54 @@ const transactions: TransactionProps[] = [
 ];
 
 export default function InProgress() {
+  const [isFetching, setIsFetching] = useState(true);
+  const [details, setDetails] = useState({
+    name: "",
+    current: "R$ 00,00",
+    target: "R$ 00,00",
+    percentage: 0,
+  });
+
   const params = useLocalSearchParams<{ id: string }>();
+
+  const targetDatabase = useTargetDatabase();
+
+  async function fetchDetails() {
+    try {
+      const response = await targetDatabase.show(Number(params.id));
+      setDetails({
+        name: response.name,
+        current: numberToCurrency(response.current),
+        target: numberToCurrency(response.amount),
+        percentage: response.percentage,
+      });
+    } catch (error) {
+      Alert.alert("Erro", "Não foi possível carregar os detalhes.");
+      console.log(error);
+    }
+  }
+
+  async function fetchData() {
+    const fetchDetailsPromise = fetchDetails();
+
+    await Promise.all([fetchDetailsPromise]);
+    setIsFetching(false);
+  }
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchData();
+    }, [])
+  );
+
+  if (isFetching) {
+    return <Loading />;
+  }
 
   return (
     <View style={{ flex: 1, padding: 24, gap: 32 }}>
       <PageHeader
-        title="In Progress"
+        title={details.name}
         rightButton={{ icon: "edit", onPress: () => {} }}
       />
       <Progress data={details} />
