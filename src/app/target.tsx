@@ -8,6 +8,7 @@ import { Button } from "@/components/Button";
 import { CurrencyInput } from "@/components/CurrencyInput";
 
 import { useTargetDatabase } from "@/database/useTargetDatabase";
+import { Try } from "expo-router/build/views/Try";
 
 export default function Target() {
   const [isProcessing, setIsProcessing] = useState(false);
@@ -26,9 +27,26 @@ export default function Target() {
 
     if (params.id) {
       // Update
+      update();
     } else {
       // Create
       create();
+    }
+  }
+
+  async function update() {
+    try {
+      await targetDatabase.update({ id: Number(params.id), name, amount });
+      Alert.alert("Sucesso", "Meta atualizada com sucesso!", [
+        {
+          text: "Ok",
+          onPress: () => router.back(),
+        },
+      ]);
+    } catch (error) {
+      Alert.alert("Erro", "Ocorreu um erro ao atualizar a meta.");
+      console.log(error);
+      setIsProcessing(false);
     }
   }
 
