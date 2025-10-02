@@ -23,4 +23,6 @@ export function useTransactionsDatabase() {
       $observation: data.observation,
     });
   }
+
+  return { create };
 }
