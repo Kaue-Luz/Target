@@ -10,28 +10,13 @@ import { Transaction, TransactionProps } from "@/components/Transaction";
 import { Loading } from "@/components/Loading";
 
 import { TransactionTypes } from "@/utils/TransactionTypes";
-
-import { useTargetDatabase } from "@/database/useTargetDatabase";
 import { numberToCurrency } from "@/utils/numberToCurrency";
 
-const transactions: TransactionProps[] = [
-  {
-    id: "1",
-    value: "R$ 50,00",
-    date: "2024-06-01",
-    description: "Grocery shopping",
-    type: TransactionTypes.INPUT,
-  },
-  {
-    id: "2",
-    value: "R$ 30,00",
-    date: "2024-06-02",
-    description: "Transport",
-    type: TransactionTypes.OUTPUT,
-  },
-];
+import { useTargetDatabase } from "@/database/useTargetDatabase";
+import { useTransactionsDatabase } from "@/database/useTransactionsDatabase";
 
 export default function InProgress() {
+  const [transactions, setTransactions] = useState<TransactionProps[]>([]);
   const [isFetching, setIsFetching] = useState(true);
   const [details, setDetails] = useState({
     name: "",
@@ -43,8 +28,9 @@ export default function InProgress() {
   const params = useLocalSearchParams<{ id: string }>();
 
   const targetDatabase = useTargetDatabase();
+  const transactionsDatabase = useTransactionsDatabase();
 
-  async function fetchDetails() {
+  async function fetchTargetDetails() {
     try {
       const response = await targetDatabase.show(Number(params.id));
       setDetails({
@@ -59,10 +45,34 @@ export default function InProgress() {
     }
   }
 
-  async function fetchData() {
-    const fetchDetailsPromise = fetchDetails();
+  async function fetchTransactions() {
+    try {
+      const response = await transactionsDatabase.listByTargetId(
+        Number(params.id)
+      );
 
-    await Promise.all([fetchDetailsPromise]);
+      setTransactions(
+        response.map((item) => ({
+          id: String(item.id),
+          value: numberToCurrency(item.amount),
+          date: String(item.created_at),
+          description: item.observation,
+          type:
+            item.amount < 0 ? TransactionTypes.OUTPUT : TransactionTypes.INPUT,
+        }))
+      );
+
+    } catch (error) {
+      Alert.alert("Erro", "Não foi possível carregar as transações.");
+      console.log(error);
+    }
+  }
+
+  async function fetchData() {
+    const fetchDetailsPromise = fetchTargetDetails();
+    const fetchTransactionsPromise = fetchTransactions();
+
+    await Promise.all([fetchDetailsPromise, fetchTransactionsPromise]);
     setIsFetching(false);
   }
 

@@ -31,6 +31,7 @@ export default function Transaction() {
       await transactionsDatabase.create({
         target_id: Number(params.id),
         amount: type === TransactionTypes.OUTPUT ? amount * -1 : amount,
+        observation,
       });
 
       Alert.alert("Sucesso", "Transação criada com sucesso!", [
