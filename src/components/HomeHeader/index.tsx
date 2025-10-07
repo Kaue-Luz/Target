@@ -24,7 +24,7 @@ export function HomeHeader({ data }: Props) {
     >
       <View>
         <Text style={styles.label}>Total que você possui</Text>
-        <Text style={styles.total}>R$ {data.total}</Text>
+        <Text style={styles.total}>{data.total}</Text>
       </View>
 
       <Separator color={colors.blue[400]} />
