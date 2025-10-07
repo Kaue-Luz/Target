@@ -20,20 +20,9 @@ Target é um aplicativo mobile desenvolvido para ajudar pessoas a organizar e al
 
 ## Imagens do Projeto
 
-### Tela de Nova Transação
-![Nova transação](./docs/screenshots/nova-transacao.png)
-
-### Cadastro de Nova Meta
-![Cadastro de meta](./docs/screenshots/cadastro-meta.png)
-
-### Edição de Meta
-![Edição de meta](./docs/screenshots/edicao-meta.png)
-
-### Tela Inicial (Resumo e Metas)
-![Tela inicial](./docs/screenshots/tela-inicial.png)
-
-### Detalhes da Meta e Transações
-![Detalhes da meta](./docs/screenshots/detalhes-meta.png)
+| Nova Transação | Cadastro de Meta | Edição de Meta | Tela Inicial | Detalhes da Meta |
+|:--------------:|:----------------:|:--------------:|:------------:|:----------------:|
+| ![Nova transação](./docs/screenshots/nova-transacao.png) | ![Cadastro de meta](./docs/screenshots/cadastro-meta.png) | ![Edição de meta](./docs/screenshots/edicao-meta.png) | ![Tela inicial](./docs/screenshots/tela-inicial.png) | ![Detalhes da meta](./docs/screenshots/detalhes-meta.png) |
 
 ## Instalação
 
